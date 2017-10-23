@@ -8,26 +8,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.R;
 
 import org.parceler.Parcels;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+
 public class DetailBookFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String EXTRA_BOOK = "param1";
 
-    // TODO: Rename and change types of parameters
+    @BindView(R.id.textViewBook)
+    TextView textViewBook;
+
     private Book mBook;
-    ViewHolder mViewHolder = new ViewHolder();
 
     public DetailBookFragment() {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static DetailBookFragment newInstance(Book book) {
         DetailBookFragment fragment = new DetailBookFragment();
         Bundle args = new Bundle();
@@ -53,14 +58,14 @@ public class DetailBookFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_detail_book, container, false);
 
-        this.mViewHolder.textViewBook = (TextView) view.findViewById(R.id.textViewBook);
-        this.mViewHolder.textViewBook.setText(mBook.toString());
+        ButterKnife.bind(this, view);
+        textViewBook.setText(mBook.toString());
 
         return view;
     }
 
-    private static class ViewHolder {
-        TextView textViewBook;
+    @OnClick(R.id.buttonTestKnife)
+    public void myButtonTest(){
+        Toast.makeText(getContext(), "Que massa papai", Toast.LENGTH_SHORT).show();
     }
-
 }
