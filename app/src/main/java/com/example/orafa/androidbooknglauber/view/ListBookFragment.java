@@ -52,7 +52,7 @@ public class ListBookFragment extends Fragment {
         return layout;
     }
 
-    @OnItemSelected(R.id.listViewBook)
+    @OnItemClick(R.id.listViewBook)
     public void itemSelectedBook(int position){
         Book book = mBooks.get(position);
         if(getActivity() instanceof ClickBookListener){
