@@ -3,16 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="16dp"
     tools:context="com.example.orafa.androidbooknglauber.view.BookActivity">
 
     <fragment
         android:id="@+id/fragmentList"
         android:name="com.example.orafa.androidbooknglauber.view.ListBookFragment"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1" />
 
+    <FrameLayout
+        android:id="@+id/detail"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="#CCCCCC">
+
+    </FrameLayout>
 
 </LinearLayout>

@@ -17,10 +17,17 @@ import com.example.orafa.androidbooknglauber.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnItemClick;
+import butterknife.OnItemSelected;
+
 public class ListBookFragment extends Fragment {
 
+    @BindView(R.id.listViewBook)
+    ListView mListViewBook;
+
     List<Book> mBooks;
-    private ViewHolder mViewHolder = new ViewHolder();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,22 +45,20 @@ public class ListBookFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View layout = inflater.inflate(R.layout.fragment_list_book, container, false);
+        ButterKnife.bind(this, layout);
 
-        this.mViewHolder.listViewBook = (ListView) layout.findViewById(R.id.listViewBook);
-        this.mViewHolder.listViewBook.setAdapter(new ArrayAdapter<Book>(getActivity(), android.R.layout.simple_list_item_1, mBooks));
-
-        this.mViewHolder.listViewBook.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Book book = mBooks.get(position);
-                if(getActivity() instanceof ClickBookListener){
-                    ClickBookListener listener = (ClickBookListener)getActivity();
-                    listener.bookClicked(book);
-                }
-            }
-        });
+        mListViewBook.setAdapter(new ArrayAdapter<Book>(getActivity(), android.R.layout.simple_list_item_1, mBooks));
 
         return layout;
+    }
+
+    @OnItemClick(R.id.listViewBook)
+    public void itemSelectedBook(int position){
+        Book book = mBooks.get(position);
+        if(getActivity() instanceof ClickBookListener){
+            ClickBookListener listener = (ClickBookListener)getActivity();
+            listener.bookClicked(book);
+        }
     }
 
     //Para fazer o if no onItemClick para ver se implementa esta interface // se foi será notificda
@@ -61,11 +66,5 @@ public class ListBookFragment extends Fragment {
     public interface ClickBookListener{
         void bookClicked(Book book);
     }
-
-    private static class ViewHolder {
-        ListView listViewBook;
-    }
-
-
 
 }
