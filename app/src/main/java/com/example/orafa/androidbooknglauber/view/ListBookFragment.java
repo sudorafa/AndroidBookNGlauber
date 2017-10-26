@@ -1,6 +1,7 @@
 package com.example.orafa.androidbooknglauber.view;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.R;
+import com.example.orafa.androidbooknglauber.model.Editor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +31,6 @@ public class ListBookFragment extends Fragment {
 
     List<Book> mBooks;
 
-    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,18 +45,26 @@ public class ListBookFragment extends Fragment {
     }
 
     @OnItemClick(R.id.listViewBook)
-    public void itemSelectedBook(int position){
+    public void itemSelectedBook(int position) {
         Book book = mBooks.get(position);
-        if(getActivity() instanceof ClickBookListener){
-            ClickBookListener listener = (ClickBookListener)getActivity();
+        if (getActivity() instanceof ClickBookListener) {
+            ClickBookListener listener = (ClickBookListener) getActivity();
             listener.bookClicked(book);
         }
     }
 
     //Para fazer o if no onItemClick para ver se implementa esta interface // se foi será notificda
     //E implementar no BookActivity
-    public interface ClickBookListener{
+    public interface ClickBookListener {
         void bookClicked(Book book);
+    }
+
+    class BooksTask extends AsyncTask<Void, Void, Editor> {
+
+        @Override
+        protected Editor doInBackground(Void... voids) {
+            return null;
+        }
     }
 
 }
