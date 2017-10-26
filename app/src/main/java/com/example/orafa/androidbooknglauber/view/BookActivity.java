@@ -26,6 +26,12 @@ public class BookActivity extends AppCompatActivity implements ListBookFragment.
                     .beginTransaction()
                     .replace(R.id.detail, detailBookFragment, "detail")
                     .commit();
+        }  else if(getResources().getBoolean(R.bool.land)) {
+            DetailBookFragment detailBookFragment = DetailBookFragment.newInstance(book);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.detail, detailBookFragment, "detail")
+                    .commit();
         } else {
             Intent intent = new Intent(this, DetailBookActivity.class);
             Parcelable parcelable = Parcels.wrap(book);

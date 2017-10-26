@@ -29,16 +29,7 @@ public class ListBookFragment extends Fragment {
 
     List<Book> mBooks;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        mBooks = new ArrayList<>();
-
-        mBooks.add(new Book("Título do Livro 1", "Ator do Livro 1"));
-        mBooks.add(new Book("Título do Livro 2", "Ator do Livro 2"));
-        mBooks.add(new Book("Título do Livro 3", "Ator do Livro 3"));
-    }
+    
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
