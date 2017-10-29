@@ -36,6 +36,21 @@ public class ListBookFragment extends Fragment {
     List<Book> mBooks;
     ArrayAdapter<Book> mAdapterBooks;
 
+    BooksTask mTask;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //para não distruir a instancia do fragment (Evitar carregar o json)
+        //a view do fragment morre, mas o fragment em si não
+        // aí os atrigutos serão mantidos
+        //oncreate e onstart/resume que são chamados
+        setRetainInstance(true);
+
+        //para inicializar apenas uma vez. Já que o create só carrega de prima
+        mBooks = new ArrayList<>();
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,7 +58,6 @@ public class ListBookFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_list_book, container, false);
         ButterKnife.bind(this, layout);
 
-        mBooks = new ArrayList<>();
         mAdapterBooks = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mBooks);
         mListViewBook.setAdapter(mAdapterBooks);
 
@@ -54,7 +68,11 @@ public class ListBookFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        new BooksTask().execute();
+        //só carregar se tiver elemento na list
+        if (mBooks.size() == 0 && mTask == null) {
+            mTask = new BooksTask();
+            mTask.execute();
+        }
     }
 
     @OnItemClick(R.id.listViewBook)
@@ -96,9 +114,9 @@ public class ListBookFragment extends Fragment {
         @Override
         protected void onPostExecute(Editor editor) {
             super.onPostExecute(editor);
-            if(editor!=null){
+            if (editor != null) {
                 mBooks.clear();
-                for(Category category : editor.getCategories()){
+                for (Category category : editor.getCategories()) {
                     mBooks.addAll(category.getBooks());
                 }
                 mAdapterBooks.notifyDataSetChanged();
