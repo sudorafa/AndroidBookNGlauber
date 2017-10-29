@@ -3,26 +3,25 @@ package com.example.orafa.androidbooknglauber.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.R;
+import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.model.Editor;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemClick;
-import butterknife.OnItemSelected;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ListBookFragment extends Fragment {
 
@@ -63,6 +62,20 @@ public class ListBookFragment extends Fragment {
 
         @Override
         protected Editor doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://github.com/nglauber/dominando_android/blob/master/livros_novatec.json")
+                    .build();
+
+            try{
+                Response response = client.newCall(request).execute();
+                String jsonString = response.body().string();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+
             return null;
         }
     }
