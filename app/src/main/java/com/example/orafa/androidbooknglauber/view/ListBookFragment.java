@@ -14,7 +14,9 @@ import android.widget.ListView;
 
 import com.example.orafa.androidbooknglauber.R;
 import com.example.orafa.androidbooknglauber.model.Book;
+import com.example.orafa.androidbooknglauber.model.Category;
 import com.example.orafa.androidbooknglauber.model.Editor;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class ListBookFragment extends Fragment {
     ListView mListViewBook;
 
     List<Book> mBooks;
+    ArrayAdapter<Book> mAdapterBooks;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,7 +44,8 @@ public class ListBookFragment extends Fragment {
         ButterKnife.bind(this, layout);
 
         mBooks = new ArrayList<>();
-        mListViewBook.setAdapter(new ArrayAdapter<Book>(getActivity(), android.R.layout.simple_list_item_1, mBooks));
+        mAdapterBooks = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mBooks);
+        mListViewBook.setAdapter(mAdapterBooks);
 
         return layout;
     }
@@ -76,14 +80,29 @@ public class ListBookFragment extends Fragment {
             Request request = new Request.Builder()
                     .url("https://raw.githubusercontent.com/nglauber/dominando_android/master/livros_novatec.json")
                     .build();
-            try{
+            try {
                 Response response = client.newCall(request).execute();
                 String jsonString = response.body().string();
                 Log.d("testarJSON", jsonString);
-            }catch (Exception e){
+                Gson gson = new Gson();
+                Editor editor = gson.fromJson(jsonString, Editor.class);
+                return editor;
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Editor editor) {
+            super.onPostExecute(editor);
+            if(editor!=null){
+                mBooks.clear();
+                for(Category category : editor.getCategories()){
+                    mBooks.addAll(category.getBooks());
+                }
+                mAdapterBooks.notifyDataSetChanged();
+            }
         }
     }
 }

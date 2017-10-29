@@ -1,5 +1,7 @@
 package com.example.orafa.androidbooknglauber.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 /**
@@ -7,6 +9,8 @@ import java.util.List;
  */
 
 public class Editor {
+
+    @SerializedName("novatec")
     List<Category> categories;
 
     public List<Category> getCategories() {

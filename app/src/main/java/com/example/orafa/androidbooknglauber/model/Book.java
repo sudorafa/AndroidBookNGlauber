@@ -1,5 +1,7 @@
 package com.example.orafa.androidbooknglauber.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.parceler.Parcel;
 import org.parceler.ParcelConstructor;
 
@@ -10,10 +12,15 @@ import org.parceler.ParcelConstructor;
 @Parcel
 public class Book{
 
+    @SerializedName("titulo")
     String title;
+    @SerializedName("autor")
     String author;
+    @SerializedName("ano")
     int year;
+    @SerializedName("paginas")
     int pages;
+    @SerializedName("capa")
     String cover;
 
     @ParcelConstructor
