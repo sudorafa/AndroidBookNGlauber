@@ -3,7 +3,9 @@ package com.example.orafa.androidbooknglauber.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import com.example.orafa.androidbooknglauber.R;
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.model.Editor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -30,7 +33,6 @@ public class ListBookFragment extends Fragment {
 
     List<Book> mBooks;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,9 +40,17 @@ public class ListBookFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_list_book, container, false);
         ButterKnife.bind(this, layout);
 
+        mBooks = new ArrayList<>();
         mListViewBook.setAdapter(new ArrayAdapter<Book>(getActivity(), android.R.layout.simple_list_item_1, mBooks));
 
         return layout;
+    }
+
+    //testar json
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        new BooksTask().execute();
     }
 
     @OnItemClick(R.id.listViewBook)
@@ -59,25 +69,21 @@ public class ListBookFragment extends Fragment {
     }
 
     class BooksTask extends AsyncTask<Void, Void, Editor> {
-
         @Override
         protected Editor doInBackground(Void... voids) {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url("https://github.com/nglauber/dominando_android/blob/master/livros_novatec.json")
+                    .url("https://raw.githubusercontent.com/nglauber/dominando_android/master/livros_novatec.json")
                     .build();
-
             try{
                 Response response = client.newCall(request).execute();
                 String jsonString = response.body().string();
+                Log.d("testarJSON", jsonString);
             }catch (Exception e){
                 e.printStackTrace();
             }
-
-
             return null;
         }
     }
-
 }

@@ -10,11 +10,11 @@ import org.parceler.ParcelConstructor;
 @Parcel
 public class Book{
 
-    private String title;
-    private String author;
-    private int year;
-    private int pages;
-    private String cover;
+    String title;
+    String author;
+    int year;
+    int pages;
+    String cover;
 
     @ParcelConstructor
     public Book(String title, String author, int year, int pages, String cover) {
