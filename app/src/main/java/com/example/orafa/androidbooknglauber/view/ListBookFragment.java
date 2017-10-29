@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.example.orafa.androidbooknglauber.R;
 import com.example.orafa.androidbooknglauber.model.Book;
+import com.example.orafa.androidbooknglauber.model.BooksAdapter;
 import com.example.orafa.androidbooknglauber.model.Category;
 import com.example.orafa.androidbooknglauber.model.Editor;
 import com.google.gson.Gson;
@@ -58,7 +59,7 @@ public class ListBookFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_list_book, container, false);
         ButterKnife.bind(this, layout);
 
-        mAdapterBooks = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, mBooks);
+        mAdapterBooks = new BooksAdapter(getContext(), mBooks);
         mListViewBook.setAdapter(mAdapterBooks);
 
         return layout;
