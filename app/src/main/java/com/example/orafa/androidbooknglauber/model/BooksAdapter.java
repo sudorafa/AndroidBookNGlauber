@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.orafa.androidbooknglauber.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -25,15 +26,6 @@ import butterknife.ButterKnife;
 
 public class BooksAdapter extends ArrayAdapter<Book> {
 
-    @BindView(R.id.imageViewCover)
-    ImageView imageViewCover;
-
-    @BindView(R.id.textViewTitle)
-    TextView textViewTitle;
-
-    @BindView(R.id.textViewAuthor)
-    TextView textViewAuthor;
-
     public BooksAdapter(@NonNull Context context, List<Book> books) {
         super(context, 0, books);
     }
@@ -43,16 +35,36 @@ public class BooksAdapter extends ArrayAdapter<Book> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         Book book = getItem(position);
 
+        ViewHolder viewHolder;
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book, null);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_book, parent, false);
+            viewHolder = new ViewHolder(convertView);
+            convertView.setTag(viewHolder);
+        }else{
+            viewHolder = (ViewHolder) convertView.getTag();
         }
 
         ButterKnife.bind(this, convertView);
 
-        textViewTitle.setText(book.getTitle());
-        textViewAuthor.setText(book.getAuthor());
-
+        Picasso.with(getContext()).load(book.getCover()).into(viewHolder.imageViewCover);
+        viewHolder.textViewTitle.setText(book.getTitle());
+        viewHolder.textViewAuthor.setText(book.getAuthor());
 
         return convertView;
+    }
+
+    static class ViewHolder {
+        @BindView(R.id.imageViewCover)
+        ImageView imageViewCover;
+        @BindView(R.id.textViewTitle)
+        TextView textViewTitle;
+        @BindView(R.id.textViewAuthor)
+        TextView textViewAuthor;
+
+        public ViewHolder(View parent) {
+            ButterKnife.bind(this, parent);
+            parent.setTag(this);
+        }
     }
 }
