@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +31,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class ListBookFragment extends Fragment {
+
+    @BindView(R.id.swipeRefreshLayoutListViewBook)
+    SwipeRefreshLayout mSwipeRefreshLayoutListViewBook;
 
     @BindView(R.id.listViewBook)
     ListView mListViewBook;
@@ -62,6 +66,14 @@ public class ListBookFragment extends Fragment {
         mAdapterBooks = new BooksAdapter(getContext(), mBooks);
         mListViewBook.setAdapter(mAdapterBooks);
 
+        mSwipeRefreshLayoutListViewBook.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mTask = new BooksTask();
+                mTask.execute();
+            }
+        });
+
         return layout;
     }
 
@@ -73,6 +85,8 @@ public class ListBookFragment extends Fragment {
         if (mBooks.size() == 0 && mTask == null) {
             mTask = new BooksTask();
             mTask.execute();
+        } else if (mTask != null && mTask.getStatus() == AsyncTask.Status.RUNNING) {
+            mSwipeRefreshLayoutListViewBook.setRefreshing(true);
         }
     }
 
@@ -92,6 +106,13 @@ public class ListBookFragment extends Fragment {
     }
 
     class BooksTask extends AsyncTask<Void, Void, Editor> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mSwipeRefreshLayoutListViewBook.setRefreshing(true);
+        }
+
         @Override
         protected Editor doInBackground(Void... voids) {
             OkHttpClient client = new OkHttpClient();
@@ -100,6 +121,7 @@ public class ListBookFragment extends Fragment {
                     .url("https://raw.githubusercontent.com/nglauber/dominando_android/master/livros_novatec.json")
                     .build();
             try {
+                Thread.sleep(5000);
                 Response response = client.newCall(request).execute();
                 String jsonString = response.body().string();
                 Log.d("testarJSON", jsonString);
@@ -122,6 +144,7 @@ public class ListBookFragment extends Fragment {
                 }
                 mAdapterBooks.notifyDataSetChanged();
             }
+            mSwipeRefreshLayoutListViewBook.setRefreshing(false);
         }
     }
 }
