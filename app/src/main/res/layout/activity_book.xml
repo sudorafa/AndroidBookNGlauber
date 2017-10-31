@@ -7,12 +7,10 @@
     android:padding="16dp"
     tools:context="com.example.orafa.androidbooknglauber.view.BookActivity">
 
-    <fragment
-        android:id="@+id/fragmentList"
-        android:name="com.example.orafa.androidbooknglauber.view.ListBookFragment"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPageListBook"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"/>
 
 
 </LinearLayout>
