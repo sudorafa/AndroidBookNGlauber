@@ -1,15 +1,14 @@
 package com.example.orafa.androidbooknglauber.view;
-
-import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.TableLayout;
+import android.support.v7.widget.Toolbar;
 
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.R;
@@ -17,6 +16,7 @@ import com.example.orafa.androidbooknglauber.model.ClickBookListener;
 
 import org.parceler.Parcels;
 
+import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -25,22 +25,25 @@ public class BookActivity extends AppCompatActivity implements ClickBookListener
     @BindView(R.id.viewPageListBook)
     ViewPager mViewPagerListBook;
 
+    @BindView(R.id.tabLayout)
+    TabLayout mTabLayout;
+
+    @BindView(R.id.toolBar)
+    Toolbar mtoolBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
         ButterKnife.bind(this);
 
+        setSupportActionBar(mtoolBar);
+
         mViewPagerListBook.setAdapter(new BookPager(getSupportFragmentManager()));
-        //Não pegou
-        //mTableLayoutListBook.setupWithViewPager(mViewPagerListBook);
+        mTabLayout.setupWithViewPager(mViewPagerListBook);
     }
 
     class BookPager extends FragmentPagerAdapter {
-
-        public BookPager (Context ctx, FragmentManager fm ){
-            super(fm);
-        }
 
         public BookPager(FragmentManager fm) {
             super(fm);
