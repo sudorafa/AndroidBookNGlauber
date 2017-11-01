@@ -1,5 +1,6 @@
 package com.example.orafa.androidbooknglauber.view;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.TableLayout;
 
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.R;
@@ -30,9 +32,15 @@ public class BookActivity extends AppCompatActivity implements ClickBookListener
         ButterKnife.bind(this);
 
         mViewPagerListBook.setAdapter(new BookPager(getSupportFragmentManager()));
+        //Não pegou
+        //mTableLayoutListBook.setupWithViewPager(mViewPagerListBook);
     }
 
     class BookPager extends FragmentPagerAdapter {
+
+        public BookPager (Context ctx, FragmentManager fm ){
+            super(fm);
+        }
 
         public BookPager(FragmentManager fm) {
             super(fm);
@@ -50,6 +58,15 @@ public class BookActivity extends AppCompatActivity implements ClickBookListener
         @Override
         public int getCount() {
             return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            if (position == 0) {
+                return getString(R.string.abaWeb);
+            } else {
+                return getString(R.string.favorite);
+            }
         }
     }
 
