@@ -17,6 +17,7 @@ import com.example.orafa.androidbooknglauber.R;
 import com.example.orafa.androidbooknglauber.model.Book;
 import com.example.orafa.androidbooknglauber.model.BooksAdapter;
 import com.example.orafa.androidbooknglauber.model.Category;
+import com.example.orafa.androidbooknglauber.model.ClickBookListener;
 import com.example.orafa.androidbooknglauber.model.Editor;
 import com.google.gson.Gson;
 
@@ -99,12 +100,6 @@ public class ListBookFragment extends Fragment {
         }
     }
 
-    //Para fazer o if no onItemClick para ver se implementa esta interface // se foi será notificda
-    //E implementar no BookActivity
-    public interface ClickBookListener {
-        void bookClicked(Book book);
-    }
-
     class BooksTask extends AsyncTask<Void, Void, Editor> {
 
         @Override
@@ -121,7 +116,6 @@ public class ListBookFragment extends Fragment {
                     .url("https://raw.githubusercontent.com/nglauber/dominando_android/master/livros_novatec.json")
                     .build();
             try {
-                Thread.sleep(5000);
                 Response response = client.newCall(request).execute();
                 String jsonString = response.body().string();
                 Log.d("testarJSON", jsonString);

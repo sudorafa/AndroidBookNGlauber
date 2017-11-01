@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.BookActivity">
+        <activity android:name=".view.BookActivity"
+            android:theme="@style/AppTheme.NoTitle">
+            <!-- Se não quiser criar um tema, mas muda o tema atual: android:theme="@style/Theme.AppCompat.NoActionBar>"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
