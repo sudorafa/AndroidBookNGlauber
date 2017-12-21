@@ -1,9 +1,7 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.2"
     defaultConfig {
         applicationId "com.example.orafa.androidbooknglauber"
         minSdkVersion 15
@@ -21,20 +19,29 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:26.0.0-alpha1'
-    compile 'com.android.support:support-v4:26.0.0-alpha1'
-    compile 'com.android.support:design:23.2.1'
-    compile 'org.parceler:parceler-api:1.0.4'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+
+    implementation 'com.android.support:design:26.1.0'
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:support-v4:26.1.0'
+    implementation 'com.google.android.gms:play-services-maps:11.6.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+
+    compile 'org.parceler:parceler-api:1.1.9'
+    annotationProcessor 'org.parceler:parceler:1.1.9'
+
     compile 'com.jakewharton:butterknife:8.8.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    testCompile 'junit:junit:4.12'
-    apt 'org.parceler:parceler:1.0.4'
-    apt 'com.jakewharton:butterknife-compiler:8.8.1'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    compile 'com.squareup.okhttp3:okhttp:3.9.1'
+
     compile 'com.google.code.gson:gson:2.8.2'
+
+    compile 'org.greenrobot:eventbus:3.1.1'
+
     compile 'com.squareup.picasso:picasso:2.5.2'
 }
